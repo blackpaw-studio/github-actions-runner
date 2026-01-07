@@ -1,17 +1,19 @@
 job "github_runner" {
-    datacenters = ["dc1"]
-    type = "batch"
+    datacenters = ["olympus"]
+    type        = "batch"
+    region      = "us-east-1"
 
     parameterized {
         payload = "forbidden"
         meta_required = ["GH_REPO_URL"]
     }
 
-    vault {
-        policies = ["github-hashicorp-demo"]
-        change_mode   = "signal"
-        change_signal = "SIGINT"
+    constraint {
+        attribute = "${node.class}"
+        value     = "linux"
     }
+
+    vault {}
 
     group "runners" {
         task "runner" {
@@ -22,18 +24,18 @@ job "github_runner" {
                 env = true
                 destination = "secret/vault.env"
                 data = <<EOF
-                    ACCESS_TOKEN = "{{with secret "demos-secret/data/github-hashicorp-demo"}}{{index .Data.data "github-pat"}}{{end}}"
+                    ACCESS_TOKEN = "{{with secret "kv/data/github"}}{{index .Data.data.blackpaw_token }}{{end}}"
                 EOF
             }
 
             env {
                 EPHEMERAL           = "true"
                 DISABLE_AUTO_UPDATE = "true"
-                RUNNER_NAME_PREFIX  = "gh-runner"
+                RUNNER_NAME_PREFIX  = "olympus"
+                ORG_NAME            = "blackpaw-studio"
                 RUNNER_WORKDIR      = "/tmp/runner/work"
-                RUNNER_SCOPE        = "repo"
-                REPO_URL            = "${NOMAD_META_GH_REPO_URL}"
-                LABELS              = "linux-x86,t2-micro"
+                RUNNER_SCOPE        = "org"
+                LABELS              = "linux-x86,${NOMAD_NODE_NAME}"
             }
 
             config {
