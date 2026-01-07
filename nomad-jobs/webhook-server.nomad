@@ -30,6 +30,10 @@ job "gh_webhook_server" {
                 data        = <<EOF
                     NOMAD_TOKEN = "{{with secret "kv/data/github"}}{{index .Data.data "nomad_token"}}{{end}}"
                     GH_WEBHOOK_SECRET = "{{with secret "kv/data/github"}}{{index .Data.data "github_webhook_secret"}}{{end}}"
+                    {{ with secret "kv/data/github" }}
+                    DOCKER_USER="{{ .Data.data.container_registry_username }}"
+                    DOCKER_PASS="{{ .Data.data.container_registry_token }}"
+                    {{ end }}
                 EOF
             }
 
@@ -44,6 +48,10 @@ job "gh_webhook_server" {
                 ports = [
                     "http",
                 ]
+                auth {
+                    username = "${DOCKER_USER}"
+                    password = "${DOCKER_PASS}"
+                }
             }
         }
     }
