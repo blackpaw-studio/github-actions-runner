@@ -13,7 +13,7 @@ job "gh_webhook_server" {
             }
         }
         service {
-            name = "gh_webhook_server"
+            name = "blackpaw-studio-github-webhook-server"
             port = "http"
             tags = [
                 "logs.promtail=true",
