@@ -23,6 +23,11 @@ job "gh_webhook_server" {
         task "app" {
             driver = "docker"
 
+            resources {
+                cpu    = 100
+                memory = 128
+            }
+
             # fetch secrets from Vault KV secret engine
             template {
                 env         = true

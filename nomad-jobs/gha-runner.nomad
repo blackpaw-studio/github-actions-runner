@@ -19,6 +19,11 @@ job "github_runner" {
         task "runner" {
             driver = "docker"
 
+            resources {
+                cpu    = 500
+                memory = 2048
+            }
+
             # fetch secrets from Vault KV secret engine
             template {
                 env = true
