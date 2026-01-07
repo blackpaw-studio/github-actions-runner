@@ -33,13 +33,12 @@ job "github_runner" {
                 DISABLE_AUTO_UPDATE = "true"
                 RUNNER_NAME_PREFIX  = "olympus"
                 ORG_NAME            = "blackpaw-studio"
-                RUNNER_WORKDIR      = "/tmp/runner/work"
                 RUNNER_SCOPE        = "org"
                 LABELS              = "linux-x86,${NOMAD_NODE_NAME}"
             }
 
             config {
-                image = "myoung34/github-runner:2.321.0-ubuntu-jammy"
+                image = "myoung34/github-runner:ubuntu-noble"
                 
                 privileged  = true
                 userns_mode = "host"
