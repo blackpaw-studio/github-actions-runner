@@ -37,7 +37,7 @@ job "github_runner" {
             }
 
             config {
-                image = "myoung34/github-runner:latest"
+                image = "myoung34/github-runner:2.321.0-ubuntu-jammy"
                 
                 privileged  = true
                 userns_mode = "host"

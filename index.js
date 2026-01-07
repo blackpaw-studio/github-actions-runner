@@ -1,4 +1,4 @@
-const http = await import('http');
+import http from 'http';
 import * as Nomad from './nomad.js'
 // See https://github.com/octokit/webhooks for more details
 import { Webhooks, createNodeMiddleware } from "@octokit/webhooks";

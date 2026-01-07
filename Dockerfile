@@ -1,5 +1,5 @@
 #### base ####
-FROM node:16-bullseye-slim as base
+FROM node:20-bookworm-slim as base
 ENV NODE_ENV=production
 # Avoid running nodejs process as PID 1
 RUN apt-get update \

@@ -34,7 +34,8 @@ job "gh_webhook_server" {
             }
 
             config {
-                image = "jrsyo/nomad-github-runners-autoscaler:alpha"
+                # TODO: Replace with your own image registry/tag after building
+                image = "ghcr.io/YOUR_ORG/nomad-github-runners-autoscaler:latest"
                 ports = [
                     "http",
                 ]
